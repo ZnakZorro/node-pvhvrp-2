@@ -1,21 +1,77 @@
 
-var request = require('request');
+const https = require('https');
 
-var url = 'https://www.yr.no/api/v0/locations/2-3083828/forecast';
+let url ='https://www.yr.no/api/v0/locations/2-3083828/forecast';
 
-var options = {json: true};
-
-request(url, options, (error, res, body) => {
-    if (error) {return  console.log(error)};
-
-    if (!error && res.statusCode == 200) {
-        console.log(typeof body);
+const parsowanie=(body)=>{
+  //console.log(body);
 		for (var o in body){
-			console.log(o);
+			//console.log(o);
 		}
-		for (var o in body.dayIntervals){
-			console.log(o,body.dayIntervals[o]);
+    console.log("------------------------------");
+		for (var o in body.longIntervals){
+      let day = body.longIntervals[o];
+			//console.log(o,day);
+      
+      let czas = (new Date(day.start)).toLocaleString('pl-PL');
+      console.log(o,czas,"T=",day.temperature.value,"FL=",day.feelsLike.value,"D=",day.precipitation.value);
+      
+      
 		}
-		
-    };
+
+}
+
+https.get(url,(res) => {
+    let body = "";
+    res.on("data", (chunk) => {
+        body += chunk;
+    });
+    res.on("end", () => {
+        try {
+            let json = JSON.parse(body);
+            console.log(json);
+            parsowanie(json);
+        } catch (error) {
+            console.error(error.message);
+        };
+    });
+}).on("error", (error) => {
+    console.error(error.message);
 });
+
+/*
+created
+update
+dayIntervals
+shortIntervals
+longIntervals
+_links
+
+dayIntervals={
+  start: '2021-05-29T00:00:00+02:00',
+  end: '2021-05-29T23:00:00+02:00',
+  twentyFourHourSymbol: 'cloudy',
+  twelveHourSymbols: [ 'cloudy', 'partlycloudy_day' ],
+  sixHourSymbols: [ 'cloudy', 'cloudy', 'cloudy', 'partlycloudy_night' ],
+  symbolConfidence: 'SomewhatCertain',
+  precipitation: { value: 0, probability: 30 },
+  temperature: { value: 15.7, min: 9, max: 15.7 },
+  wind: { min: 1.5, max: 3.9 }
+}
+
+
+ longIntervals={
+  symbol: { sunup: false, n: 4, clouds: 3, precip: 0 },
+  symbolCode: { next6Hours: 'cloudy' },
+  precipitation: { min: 0, max: 0, value: 0, pop: 24, probability: 24 },
+  temperature: { value: 15.3, min: 14.2, max: 15.8 },
+  wind: { direction: 286, speed: 3.7 },
+  feelsLike: { value: 15.3 },
+  pressure: { value: 1019 },
+  cloudCover: { value: 96, high: 7, middle: 27, low: 87, fog: 0 },
+  humidity: { value: 59.2 },
+  dewPoint: { value: 7.3 },
+  start: '2021-05-30T14:00:00+02:00',
+  end: '2021-05-30T20:00:00+02:00'
+}
+*/
