@@ -19,7 +19,8 @@ const parsowanie=(body)=>{
 			//console.log(o,day);
       
       let czas = (new Date(day.start)).toLocaleString('pl-PL');
-      console.log(o,czas,"T=",day.temperature.value,"FL=",day.feelsLike.value,"D=",day.precipitation.value);
+      let deszcz = Math.max(day.precipitation.value,day.precipitation.min,day.precipitation.max);
+      console.log(czas,"T=",day.temperature.value,"FL=",day.feelsLike.value,"  D="+deszcz+" mm");
       
       
 		}
