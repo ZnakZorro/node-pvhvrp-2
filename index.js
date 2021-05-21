@@ -3,8 +3,8 @@
 console.log(`Hello Node.js v${process.versions.node}!`);
 for (let i=0; i<3; i++) console.log(`${i} Hello Node.js v${process.versions.node}!`);
 
-const fs = require('fs');
-const cheerio = require('cheerio');
+//const fs = require('fs');
+//const cheerio = require('cheerio');
 const got = require('got');
 
 let promiseYRNO = new Promise((resolve, reject) => {
