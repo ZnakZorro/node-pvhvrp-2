@@ -2,7 +2,7 @@
 
 //const fs = require('fs');
 //const cheerio = require('cheerio');
-const got = require('got');
+import got from 'got';
 
 let promiseYRNO = new Promise((resolve, reject) => {
   
