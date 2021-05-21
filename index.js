@@ -1,7 +1,12 @@
 
+let q = "https://www.yr.no/en/forecast/graph/2-3083828/Poland/West%20Pomerania/Szczecin/Szczecin%20D%C4%85bie";
+
+
+
 const https = require('https');
 
-let url ='https://www.yr.no/api/v0/locations/2-3083828/forecast';
+let url ='https://www.yr.no/api/v0/locations/2-3083828/forecast'; // Dąbie
+//let url ='https://www.yr.no/api/v0/locations/5-1220500/forecast'; // Szczecin 
 
 const parsowanie=(body)=>{
   //console.log(body);
