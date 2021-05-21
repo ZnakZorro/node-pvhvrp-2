@@ -29,7 +29,7 @@ https.get(url,(res) => {
     res.on("end", () => {
         try {
             let json = JSON.parse(body);
-            console.log(json);
+            //console.log(json);
             parsowanie(json);
         } catch (error) {
             console.error(error.message);
